@@ -20,13 +20,17 @@ import java.util.stream.Collectors;
 @Service
 public class TodoService implements ITodoService {
 
+
     private final Converter converter;
     private final ITagService tagService;
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public TodoService(Converter converter, ITagService tagService, TodoRepository todoRepository, UserRepository userRepository) {
+    public TodoService(Converter converter,
+                       ITagService tagService,
+                       TodoRepository todoRepository,
+                       UserRepository userRepository) {
         this.converter = converter;
         this.tagService = tagService;
         this.todoRepository = todoRepository;
@@ -38,18 +42,19 @@ public class TodoService implements ITodoService {
     public TodoPojo createTodo(Todo todo, Long userId) {
 
         Optional<User> todoUserOptional = userRepository.findById(userId);
+
         if (todoUserOptional.isPresent()) {
+
             Set<Tag> tags = new HashSet<>();
-
             tags.addAll(todo.getTagList());
-            todo.getTagList().clear();
-            todo.setUser(todoUserOptional.get());
 
+            todo.getTagList().clear();
+
+            todo.setUser(todoUserOptional.get());
             todoRepository.save(todo);
-            tags.stream()
-                    .map(tag -> tagService.findOrCreate(tag))
-                    .collect(Collectors.toSet())
-                    .forEach(todo::addTag);
+
+            tags.stream().map(tag -> tagService.findOrCreate(tag)).collect(Collectors.toSet()).forEach(todo::addTag);
+
             return converter.todoToPojo(todo);
         } else {
             throw new CustomException("unable to get user for todo");
@@ -58,7 +63,7 @@ public class TodoService implements ITodoService {
 
     @Override
     @Transactional
-    public TodoPojo getTodo(long id) {
+    public TodoPojo getTodo(Long id, Long userId) {
         Optional<Todo> todoOptional = todoRepository.findById(id);
         if (todoOptional.isPresent()) {
             return converter.todoToPojo(todoOptional.get());
@@ -69,21 +74,8 @@ public class TodoService implements ITodoService {
 
     @Override
     @Transactional
-    public List<TodoPojo> getAllTodos(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            return todoRepository.findAllByUser(userOptional.get())
-                    .stream()
-                    .map(todo -> converter.todoToPojo(todo))
-                    .collect(Collectors.toList());
-        } else {
-            throw new NoSuchElementException("unable to get all todo: invalid id");
-        }
-    }
+    public TodoPojo updateTodo(Todo source, Long todoId, Long userId) {
 
-    @Override
-    @Transactional
-    public TodoPojo updateTodo(Todo source, long todoId) {
         Optional<Todo> targetOptional = todoRepository.findById(todoId);
 
         if (targetOptional.isPresent()) {
@@ -106,18 +98,27 @@ public class TodoService implements ITodoService {
 
     @Override
     @Transactional
-    public String deleteTodo(long id) {
+    public String deleteTodo(Long id, Long userId) {
+
         Optional<Todo> todoForDeleteOptional = todoRepository.findById(id);
-        if (todoForDeleteOptional.isPresent()) {
+        if(todoForDeleteOptional.isPresent()) {
             Todo todoForDelete = todoForDeleteOptional.get();
-            todoForDelete.getTagList()
-                    .stream()
-                    .collect(Collectors.toList())
-                    .forEach(tag -> tag.removeTodo(todoForDelete));
+            todoForDelete.getTagList().stream().collect(Collectors.toList()).forEach(tag -> tag.removeTodo(todoForDelete));
             todoRepository.delete(todoForDelete);
-            return "Todo with id: " + id + " has successfully deleted";
+            return "Todo with id:" + id + " was successfully removed";
         } else {
             throw new NoSuchElementException("unable to delete todo");
+        }
+    }
+
+    @Override
+    @Transactional
+    public List<TodoPojo> getAllTodos(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            return todoRepository.findAllByUser(userOptional.get()).stream().map(todo -> converter.todoToPojo(todo)).collect(Collectors.toList());
+        } else {
+            throw new NoSuchElementException("No user with id: " + userId + " was found");
         }
     }
 }

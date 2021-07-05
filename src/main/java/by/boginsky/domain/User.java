@@ -1,3 +1,4 @@
+
 package by.boginsky.domain;
 
 
@@ -15,6 +16,9 @@ public class User {
     @Column(name = "ID")
     private Long id;
 
+    @Column(name = "NAME", nullable = false)
+    private String name;
+
     @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
 
@@ -23,6 +27,18 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Todo> todoList = new HashSet<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTodoList(Set<Todo> todoList) {
+        this.todoList = todoList;
+    }
 
     public Long getId() {
         return id;
@@ -77,28 +93,27 @@ public class User {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return id.equals(user.id) && name.equals(user.name) && email.equals(user.email) && password.equals(user.password) && todoList.equals(user.todoList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, password, todoList);
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", password='").append(password).append('\'');
         sb.append(", todoList=").append(todoList);
         sb.append('}');
         return sb.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return id.equals(user.id) &&
-                email.equals(user.email) &&
-                password.equals(user.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, email, password);
     }
 }

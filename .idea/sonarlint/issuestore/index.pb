@@ -1,0 +1,27 @@
+
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+k
+;src/main/java/by/boginsky/security/AuthenticationUtils.java,2\7\27230f0bc3fcb57cce8ce2a9cc91c7c699e310a0
+d
+4src/main/java/by/boginsky/services/ITodoService.java,9\7\97d26961791e881ff5b49ec4f83922c898415599
+c
+3src/main/java/by/boginsky/services/ITagService.java,6\5\650e0e2ddda36684a442c0fa6caeaa7ae3b6e22a
+d
+4src/main/java/by/boginsky/services/IUserService.java,d\8\d8fd0c0e308e4f3e6ce8d1e7f2afeffd65816f82
+k
+;src/main/java/by/boginsky/annotations/Authenticational.java,3\5\35310a7360fed7f4dde4fe140ac3ecaa859a09a6
+j
+:src/main/java/by/boginsky/repositories/TodoRepository.java,7\3\732a7029e589e6870c0648e29c58c926bd645575
+j
+:src/main/java/by/boginsky/repositories/UserRepository.java,3\2\32ea92189382ffa283c289259cd6208fb3e37774
+i
+9src/main/java/by/boginsky/repositories/TagRepository.java,2\7\27b7f8531c569de8f0401123c61011b83670af20
+m
+=src/main/java/by/boginsky/security/AuthenticationAspects.java,f\0\f084813acbe1af8be888e6585e949134c2a129a0
+d
+4src/main/java/by/boginsky/security/TokenManager.java,2\6\26253d2bd72e06dec81925f82f63971ad7cdc668
+d
+4src/main/java/by/boginsky/security/TokenPayload.java,7\6\76dd90c596ccfb2aac02c6b9ab8c76044b56fe47
+g
+7src/main/java/by/boginsky/services/impl/TagService.java,b\a\bafa4c449e606f41948cb023b3c7eefac150c950

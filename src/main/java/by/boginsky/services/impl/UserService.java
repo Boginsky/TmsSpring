@@ -21,33 +21,47 @@ public class UserService implements IUserService {
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(Converter converter, UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService(Converter converter,
+                       UserRepository userRepository) {
         this.converter = converter;
+        this.userRepository = userRepository;
     }
 
     @Override
     @Transactional
     public UserPojo createUser(User user) {
+
         userRepository.save(user);
+
         return converter.userToPojo(user);
+    }
+
+    @Override
+    @Transactional
+    public UserPojo findUserByEmailAndPassword(String email, String password) {
+        Optional<User> userOptional = userRepository.findByEmailAndPassword(email, password);
+        if(userOptional.isPresent()) {
+            return converter.userToPojo(userOptional.get());
+        } else {
+            return null;
+        }
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserPojo getUser(long id) {
+
         Optional<User> foundUserOptional = userRepository.findById(id);
         return converter.userToPojo(foundUserOptional.get());
+
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<UserPojo> getAllUsers() {
         List<User> listOfUsers = userRepository.findAll();
-        return listOfUsers
-                .stream()
-                .map(user -> converter.userToPojo(user))
-                .collect(Collectors.toList());
+        return listOfUsers.stream().map(user -> converter.userToPojo(user)).collect(Collectors.toList());
+
     }
 
     @Override
@@ -61,7 +75,7 @@ public class UserService implements IUserService {
             userRepository.save(target);
             return converter.userToPojo(target);
         } else {
-            throw new CustomException("cant update user");
+            throw new CustomException("unable to update user");
         }
     }
 
@@ -69,9 +83,10 @@ public class UserService implements IUserService {
     @Transactional
     public String deleteUser(long id) {
         Optional<User> userForDeleteOptional = userRepository.findById(id);
+
         if (userForDeleteOptional.isPresent()) {
             userRepository.delete(userForDeleteOptional.get());
-            return "User with id: " + id + " was successfully removed";
+            return "User with id:" + id + " was successfully remover";
         } else {
             throw new CustomException("unable to delete user");
         }

@@ -6,14 +6,16 @@ import by.boginsky.domain.plaintobjects.UserPojo;
 import java.util.List;
 
 public interface IUserService {
-
-    List<UserPojo> getAllUsers();
-
     UserPojo createUser(User user);
 
+    UserPojo findUserByEmailAndPassword(String email, String password);
+
     UserPojo getUser(long id);
+
+    List<UserPojo> getAllUsers();
 
     UserPojo updateUser(User user, long id);
 
     String deleteUser(long id);
+
 }
