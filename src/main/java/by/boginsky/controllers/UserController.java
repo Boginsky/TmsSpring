@@ -34,29 +34,16 @@ public class UserController {
         this.tokenManager = tokenManager;
     }
 
-//    @GetMapping(path = "/")
-//    public ModelAndView login(HttpSession session) {
-//        return new ModelAndView("login", "login", new User());
-//    }
-
-
-//    @PostMapping(path = "/registration")
-//    public ResponseEntity<UserPojo> createUser(@RequestBody User user) {
-//        UserPojo result = userService.createUser(user);
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-
-    @RequestMapping(value = "registration1", method = RequestMethod.GET)
-    public ModelAndView developer() {
-        return new ModelAndView("user", "user", new User());
+    @GetMapping(path = "/")
+    public ModelAndView login(HttpSession session) {
+        return new ModelAndView("login", "login", new User());
     }
 
+
     @PostMapping(path = "/registration")
-    public String createUser(@ModelAttribute("TmsServlet") User user, ModelMap model) {
-        model.addAttribute("email",user.getEmail());
-        model.addAttribute("password",user.getPassword());
-        model.addAttribute("name",user.getName());
-        return "result";
+    public ResponseEntity<UserPojo> createUser(@RequestBody User user) {
+        UserPojo result = userService.createUser(user);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
