@@ -11,7 +11,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,14 +35,18 @@ public class UserController {
 
     @GetMapping(path = "/")
     public ModelAndView login(HttpSession session) {
-        return new ModelAndView("login", "login", new User());
+        return new ModelAndView("login", HttpStatus.OK);
     }
 
+    @GetMapping(path = "/registration")
+    public ModelAndView createUser() {
+        return new ModelAndView("registration",HttpStatus.OK);
+    }
 
     @PostMapping(path = "/registration")
-    public ResponseEntity<UserPojo> createUser(@RequestBody User user) {
+    public ModelAndView createUser(@RequestBody User user) {
         UserPojo result = userService.createUser(user);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ModelAndView("login",HttpStatus.OK);
     }
 
 
