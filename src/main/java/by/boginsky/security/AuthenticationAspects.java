@@ -19,12 +19,13 @@ public class AuthenticationAspects {
     private final AuthenticationUtils authenticationUtils;
 
     @Autowired
-    public AuthenticationAspects (AuthenticationUtils authenticationUtils) {
+    public AuthenticationAspects(AuthenticationUtils authenticationUtils) {
         this.authenticationUtils = authenticationUtils;
     }
 
     @Pointcut("execution(@by.boginsky.annotations.Authenticational * *(..))")
-    public void annotatedByAuthenticational() {}
+    public void annotatedByAuthenticational() {
+    }
 
     @Around("annotatedByAuthenticational()")
     public Object around(ProceedingJoinPoint joinPoint) {

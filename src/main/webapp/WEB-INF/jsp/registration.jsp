@@ -24,24 +24,28 @@
                 <div class="row justify-content-center my-auto">
                     <div class="col-md-8 col-10 my-5">
                         <h6 class="msg-info">Please enter your email and password</h6>
-                        <form: form method="post" action="createUser">
+
+
+
+                        <form:form method="post" action="registration" commandName="userForm">
                             <div class="form-group"><label class="form-control-label text-muted"></label> <input
-                                    type="text" id="name" name="name" placeholder="Name" class="form-control"></div>
-                            <h6 class="msg-info"></h6>
-                            <div class="form-group"><label class="form-control-label text-muted"></label> <input
-                                    type="text" id="email" name="email" placeholder="Email" class="form-control"></div>
+                                    type="text" id="email" name="email" placeholder="Email" class="form-control">
+                            </div>
                             <h6 class="msg-info"></h6>
                             <div class="form-group"><label class="form-control-label text-muted"></label> <input
                                     type="text" id="password" name="password" placeholder="Password"
-                                    class="form-control"></div>
-                            <div class="row justify-content-center my-3 px-3">
-                                <button class="btn-block btn-color">Sign up</button>
+                                    class="form-control">
                             </div>
-                        </form:>
+                            <div class="row justify-content-center my-3 px-3">
+                                <a href="/WebProjectTms_war_exploded/">
+                                    <button class="btn-block btn-color">Sign up</button>
+                                </a>
+                            </div>
+                        </form:form>
+
+
+
                     </div>
-                </div>
-                <div class="bottom text-center mb-5">
-                    <p href="#" class="sm-text mx-auto mb-3"></p>
                 </div>
             </div>
             <div class="card card2">

@@ -1,6 +1,5 @@
 package by.boginsky.domain;
 
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;

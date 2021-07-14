@@ -27,7 +27,9 @@
                         <div class="form-group"> <label class="form-control-label text-muted"></label> <input type="text" id="email" name="email" placeholder="Email" class="form-control"> </div>
                         <h6 class="msg-info"> </h6>
                         <div class="form-group"> <label class="form-control-label text-muted"></label> <input type="password" id="psw" name="psw" placeholder="Password" class="form-control"> </div>
-                        <div class="row justify-content-center my-3 px-3"> <button class="btn-block btn-color">Sign in</button> </div>
+                        <div class="row justify-content-center my-3 px-3">
+                            <a href="/WebProjectTms_war_exploded/authentication"><button class="btn-block btn-color">Sign in</button></a>
+                        </div>
                     </div>
                 </div>
                 <div class="bottom text-center mb-5">

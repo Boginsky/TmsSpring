@@ -11,15 +11,15 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -39,28 +39,36 @@ public class UserController {
     }
 
     @GetMapping(path = "/registration")
-    public ModelAndView createUser() {
-        return new ModelAndView("registration",HttpStatus.OK);
+    public ModelAndView createUser(Model model) {
+        model.addAttribute("userForm", new User());
+        return new ModelAndView("registration", HttpStatus.OK);
     }
 
     @PostMapping(path = "/registration")
-    public ModelAndView createUser(@RequestBody User user) {
-        UserPojo result = userService.createUser(user);
-        return new ModelAndView("login",HttpStatus.OK);
+    public ModelAndView registration(@ModelAttribute("userForm") User userForm, Map<String, Object> map) {
+
+//        map.put("email",что сюда);
+//        map.put("password",что сюда);
+
+        userService.createUser(userForm);
+
+        return new ModelAndView("login", HttpStatus.OK);
     }
 
-
-    @PostMapping(path = "/authentication")
-    public ResponseEntity<String> authenticateUser(@RequestBody User user) {
+    @GetMapping(path = "/authentication")
+    public ModelAndView authenticateUser(@RequestBody User user) {
         UserPojo authenticatedUser = userService.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
 
         if (authenticatedUser == null) {
-            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            return new ModelAndView("error", HttpStatus.UNAUTHORIZED);
         }
 
-        String token = tokenManager.createToken(new TokenPayload(authenticatedUser.getId(), authenticatedUser.getEmail(), Calendar.getInstance().getTime()));
+        String token = tokenManager.createToken(new TokenPayload(
+                authenticatedUser.getId(),
+                authenticatedUser.getEmail(),
+                Calendar.getInstance().getTime()));
 
-        return new ResponseEntity<>(token, HttpStatus.OK);
+        return new ModelAndView("/user/{userId}/todo/{id}", HttpStatus.OK); //название представления
     }
 
     @GetMapping(path = "/user/{id}")

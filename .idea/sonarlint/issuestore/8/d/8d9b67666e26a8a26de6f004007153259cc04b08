@@ -1,0 +1,15 @@
+
+X
+java:S1128"BRemove this unused import 'javax.servlet.http.HttpServletRequest'.(ø©¹…
+]
+java:S46840"@Replace this persistent entity with a simple POJO or DTO object.(¯¼»¼8‡Ô¬ª/
+V	java:S1252"<This block of commented-out lines of code should be removed.(şĞÿŸûÿÿÿÿ
+]
+java:S4684;"@Replace this persistent entity with a simple POJO or DTO object.(¿’Ç•8ƒ‡Ô¬ª/
+N
+java:S1854B"9Remove this useless assignment to local variable "token".(ÚàÜ
+b
+java:S4684Y"@Replace this persistent entity with a simple POJO or DTO object.(Îâëûÿÿÿÿ8†‡Ô¬ª/
+h	java:S100x"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰¼ñªøÿÿÿÿ
+?
+java:S1481B"*Remove this unused "token" local variable.(ÚàÜ
